@@ -1,0 +1,20 @@
+classDiagram
+    class User {
+        - name : str
+        - id : UUID
+        - email : str
+        - password : str
+        - medical_data
+        - diagnosis
+
+        + upload_medical_data(file)
+        + analyze_medical_data(analyzer) : Diagnostic
+        + get_diagnosis() 
+        + clear_data()
+    }
+
+    %% Description des méthodes (dans les commentaires Mermaid, non visibles dans le rendu) :
+    %% upload_medical_data(file) : Permet à l'utilisateur de fournir son fichier médical (ex : scanner).
+    %% analyze_medical_data(analyzer) : Envoie le fichier médical à un outil d'analyse et stocke le diagnostic.
+    %% get_diagnosis() : Retourne le diagnostic associé à l'utilisateur.
+    %% clear_data() : Réinitialise medical_data et diagnosis pour un nouveau traitement.

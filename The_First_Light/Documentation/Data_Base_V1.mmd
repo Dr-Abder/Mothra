@@ -1,0 +1,23 @@
+erDiagram
+    USERS {
+        UUID id PK "Identifiant unique de l'utilisateur"
+        string name "Nom de l'utilisateur"
+        string email "Email unique de l'utilisateur"
+        string password "Mot de passe hashé"
+    }
+
+    MEDICAL_FILES {
+        int id PK "Identifiant du fichier médical"
+        UUID user_id FK "Lien vers USERS.id"
+        string file_path "Chemin vers le fichier stocké"
+    }
+
+    DIAGNOSIS {
+        int id PK "Identifiant du diagnostic"
+        int medical_file_id FK "Lien vers MEDICAL_FILES.id"
+        text result "Résultat du diagnostic"
+        datetime created_at "Date de création du diagnostic"
+    }
+
+    USERS ||--o{ MEDICAL_FILES : possède
+    MEDICAL_FILES ||--o{ DIAGNOSIS : génère
