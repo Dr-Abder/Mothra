@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant Utilisateur
+    participant Frontend
+    participant Backend
+    participant Stockage
+    participant IA_Model
+    participant BaseDeDonnées
+
+    Utilisateur->>Frontend: Sélectionne un fichier médical
+    Frontend->>Backend: Envoie le fichier via POST /upload
+    Backend->>Backend: Vérifie l’authentification de l’utilisateur
+    Backend->>Stockage: Sauvegarde du fichier
+    Stockage-->>Backend: Chemin ou ID du fichier
+    Backend->>BaseDeDonnées: Enregistre l’entrée dans medical_files
+    BaseDeDonnées-->>Backend: Confirmation
+    Backend->>IA_Model: Envoie le fichier pour analyse
+    IA_Model-->>Backend: Retourne un diagnostic (ex: JSON, texte)
+    Backend->>BaseDeDonnées: Enregistre le diagnostic dans la table diagnosis
+    BaseDeDonnées-->>Backend: Confirmation
+    Backend-->>Frontend: Envoie le diagnostic à afficher
+    Frontend-->>Utilisateur: Affiche le résultat du diagnostic

@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant Utilisateur
+    participant Frontend
+    participant Backend
+    participant BaseDeDonnées
+
+    Utilisateur->>Frontend: Remplit le formulaire (nom, email, mot de passe)
+    Frontend->>Backend: Envoie la requête POST /register
+    Backend->>Backend: Valide les champs (format email, force du mot de passe)
+    Backend->>BaseDeDonnées: Vérifie si l'email existe déjà
+    BaseDeDonnées-->>Backend: Réponse (utilisateur existe ou non)
+    alt Email déjà utilisé
+        Backend-->>Frontend: Retourne une erreur "Email déjà utilisé"
+        Frontend-->>Utilisateur: Affiche un message d'erreur
+    else Email disponible
+        Backend->>Backend: Hash du mot de passe
+        Backend->>BaseDeDonnées: Crée un nouvel utilisateur
+        BaseDeDonnées-->>Backend: Confirmation d'enregistrement
+        Backend-->>Frontend: Réponse succès (utilisateur créé)
+        Frontend-->>Utilisateur: Affiche un message "Compte créé"
+    end

@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant Utilisateur
+    participant Frontend
+    participant Backend
+    participant Stockage
+    participant IA_Model
+    participant BaseDeDonnées
+
+    Utilisateur->>Frontend: Clique sur "Envoyer un nouveau fichier"
+    Frontend->>Backend: Requête POST /upload (nouveau fichier)
+    Backend->>Backend: Vérifie que l'utilisateur est authentifié
+    Backend->>Stockage: Stocke le fichier
+    Stockage-->>Backend: Retourne l’ID ou le chemin du fichier
+    Backend->>BaseDeDonnées: Insère une nouvelle ligne dans `medical_files`
+    BaseDeDonnées-->>Backend: Confirmation de l’enregistrement
+    Backend->>IA_Model: Transmet le fichier pour analyse
+    IA_Model-->>Backend: Retourne le nouveau diagnostic
+    Backend->>BaseDeDonnées: Enregistre le nouveau diagnostic dans `diagnosis`
+    BaseDeDonnées-->>Backend: Confirmation
+    Backend-->>Frontend: Renvoie le résultat du nouveau diagnostic
+    Frontend-->>Utilisateur: Affiche le nouveau diagnostic
