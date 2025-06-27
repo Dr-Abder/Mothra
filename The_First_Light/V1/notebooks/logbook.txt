@@ -1,0 +1,13 @@
+Ceci est un journal de bord il vas servir a noter tout ce que je fait chaque et tout ce qui ce passe sur le model IA que je suis en train de construire :
+
+Lundi 23 juin:
+Début du projet, recherche sur comment crée son modele IA , qu'elles sont les notion a avoir pour crée un premier modele qui fonctionne avec une bonne précision.
+
+Mardi 24 jusqu'a Jeudi 26 juin:
+Une fois les recherches terminer sur la conception d'un modele quiest capable de detecter une patholgie (c'est un modele de reconnaissance CNN), je commance mes la conception du modele sur google collab pour me beigner dedans.
+
+Vendredi 25 Juin:
+Installez les librairies nécessaire
+Ayant finit mon premier modele fait sur Google Collab je decide de le refaire sur mon pc en locale pour avoir tout l'ensemble du projet dans un meme endroit et pour que je puisse push sur githubµ
+Probleme recontrer : Relier l'api Kaggle mon terminale, je recontre un probleme a la premiere etape qui etait pourtant simple a faire sur Google Collab. Pour pouvoir telecharger le dataset nécessaire au modele il suffit
+relier l'api Kaggle avec le fichier kaggle.json ou ce trouve ma clé et mon username mais le programme qui relie ne retrouve pas le chemin du fichier kaggle.json ce qui bloque l'etape du telechargement de la data.
