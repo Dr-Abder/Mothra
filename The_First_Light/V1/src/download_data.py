@@ -1,25 +1,21 @@
 import os
 import shutil
-from kaggle.api.kaggle_api_extended import KaggleApi
 
-# 🔁 Récupérer le chemin absolu du projet
+# 1. Config des chemins
 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# 📁 Fichier source = ton kaggle.json dans /V1/kaggle/
 kaggle_json_src = os.path.join(base_dir, "kaggle", "kaggle.json")
-
-# 📁 Dossier cible = ~/.config/kaggle (exigé par l'API)
 kaggle_config_dir = os.path.expanduser("~/.config/kaggle")
 kaggle_json_dst = os.path.join(kaggle_config_dir, "kaggle.json")
 
-# 📦 Créer le dossier ~/.config/kaggle si besoin
+# 2. Copier et sécuriser
 os.makedirs(kaggle_config_dir, exist_ok=True)
-
-# 📤 Copier kaggle.json dans le bon dossier
 shutil.copy(kaggle_json_src, kaggle_json_dst)
-os.chmod(kaggle_json_dst, 0o600)  # 🔐 Permissions sécurisées
+os.chmod(kaggle_json_dst, 0o600)
 
-# ✅ Authentification et téléchargement
+# ✅ 3. Import seulement maintenant que le fichier est bien copié
+from kaggle.api.kaggle_api_extended import KaggleApi
+
+# 4. Authentification et téléchargement
 api = KaggleApi()
 api.authenticate()
 
