@@ -1,15 +1,29 @@
-Ceci est un journal de bord il vas servir a noter tout ce que je fait chaque et tout ce qui ce passe sur le model IA que je suis en train de construire :
+Journal de bord  – Projet Mothra V1
 
-Lundi 23 juin:
-Début du projet, recherche sur comment crée son modele IA , qu'elles sont les notion a avoir pour crée un premier modele qui fonctionne avec une bonne précision.
+Lundi 23 juin
+Début du projet : recherches sur la création d’un modèle IA, en identifiant les notions indispensables pour concevoir un premier modèle fonctionnel avec une bonne précision.
+J’ai regardé beaucoup de vidéos, lu des documentations et exploré les repos GitHub de personnes ayant réalisé ce type de projet.
 
-Mardi 24 jusqu'a Jeudi 26 juin:
-Une fois les recherches terminer sur la conception d'un modele quiest capable de detecter une patholgie (c'est un modele de reconnaissance CNN), je commance mes la conception du modele sur google collab pour me beigner dedans.
+Mardi 24 au jeudi 26 juin
+Après avoir terminé mes recherches sur la conception d’un modèle capable de détecter une pathologie (un modèle CNN pour reconnaissance d’images), je commence la conception du modèle directement sur Google Colab pour me familiariser avec l’environnement.
+Google Colab est un outil parfait pour débuter : la prise en main est un peu complexe au début, mais grâce aux vidéos et à la documentation, ça devient simple rapidement.
+La conception du premier modèle est achevée sans difficulté majeure, sauf pour le dataset. Je ne pouvais pas uploader directement les données que j’avais téléchargées sur mon PC car le dossier était trop volumineux.
+J’ai alors trouvé une solution : relier mon notebook Colab à l’API Kaggle, ce qui permet de télécharger directement le dataset dans l’environnement de travail. C’était simple et rapide en suivant une vidéo tutorielle.
+Une fois les données téléchargées, elles ont été nettoyées et traitées, puis séparées en deux fichiers correspondant aux deux classes binaires (malin / bénin). Le modèle sera entraîné sur ces fichiers, puis testé sur des images externes.
 
-Vendredi 25 Juin:
-Installez les librairies nécessaire
-Ayant finit mon premier modele fait sur Google Collab je decide de le refaire sur mon pc en locale pour avoir tout l'ensemble du projet dans un meme endroit et pour que je puisse push sur githubµ
-Probleme recontrer : Relier l'api Kaggle mon terminale, je recontre un probleme a la premiere etape qui etait pourtant simple a faire sur Google Collab. Pour pouvoir telecharger le dataset nécessaire au modele il suffit
-relier l'api Kaggle avec le fichier kaggle.json ou ce trouve ma clé et mon username mais le programme qui relie ne retrouve pas le chemin du fichier kaggle.json ce qui bloque l'etape du telechargement de la data.La solution etait de faire un programme python qui dermine l'empalcement du fichier , creer le dossier , le copie , le securise ces permissions et seulemnt ensuite importer l'api de kaggle et verifier tout le process avec programme d'authenticattion
-Je recontre un probleme de telechargement du dataset selectionnée , l'api kaggle fonctionne et arrive a retrouver le dataset en question et ce telecharge mais il ce coupe d'un coup . Le probleme etait que l'environnement du codespace que je fait etait insufisament aliment en ram pour pouvoir telecharger tout un dataset complet de 5GO, j'ai du reconfigurer l'envireonement et lui donner plus de ram.
-Tout le dataset "skin-cancer-mnist-ham10000" a ete telecharger en entier avec success.
+Vendredi 27 juin
+Installation des librairies nécessaires.
+Ayant fini mon premier modèle sur Google Colab, je décide de le refaire en local sur mon PC afin d’avoir l’ensemble du projet au même endroit et pouvoir le versionner proprement sur GitHub.
+Problèmes rencontrés : connexion à l’API Kaggle via le terminal.
+Sur Colab, c’était simple, mais en local, le programme ne trouvait pas le chemin vers le fichier kaggle.json contenant ma clé et mon identifiant.
+La solution a été d’écrire un script Python qui détecte l’emplacement du fichier, crée les dossiers nécessaires, copie le fichier, sécurise les permissions, puis importe l’API Kaggle pour authentification.
+J’ai également rencontré des problèmes lors du téléchargement du dataset : l’API Kaggle fonctionnait et commençait à télécharger, mais le transfert se coupait brusquement.
+Le problème venait de la mémoire RAM insuffisante allouée à mon environnement Codespace. Après reconfiguration avec plus de RAM, le dataset complet skin-cancer-mnist-ham10000 (5 Go) a pu être téléchargé avec succès.
+
+Lundi 30 juin soir – Mardi 1er juillet matin
+Le modèle Mothra V1 est terminé et adapté pour la suite du projet.
+Le modèle est assez performant après un entraînement de seulement 10 époques, avec une précision globale d’environ 87 %, ce qui est satisfaisant. La perte (loss) s’est stabilisée autour de 30 %.
+J’ai rencontré des problèmes d’importation de modules entre les dossiers models/ et src/ : c’était une erreur d’indentation dans mes instructions d’import. J’ai mis 30 minutes à localiser et corriger ce détail (°_°).
+À part cela, aucun problème majeur lors de la conception du modèle, qui s’est inspiré du travail effectué précédemment sur Google Colab.
+Les tests manuels ont fonctionné avec succès : Mothra a réussi à établir le bon diagnostic en affichant la probabilité d’une pathologie bénigne ou maligne.
+La partie IA est probablement terminée à ce stade du projet. Je vais maintenant m’attaquer au reste, c’est-à-dire au back-end et au front-end, mais je pense revenir affiner Mothra plus tard.
