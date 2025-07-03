@@ -27,3 +27,10 @@ J’ai rencontré des problèmes d’importation de modules entre les dossiers m
 À part cela, aucun problème majeur lors de la conception du modèle, qui s’est inspiré du travail effectué précédemment sur Google Colab.
 Les tests manuels ont fonctionné avec succès : Mothra a réussi à établir le bon diagnostic en affichant la probabilité d’une pathologie bénigne ou maligne.
 La partie IA est probablement terminée à ce stade du projet. Je vais maintenant m’attaquer au reste, c’est-à-dire au back-end et au front-end, mais je pense revenir affiner Mothra plus tard.
+
+Mercredi au Jeudi
+J’ai mis en place le back-end FastAPI séparé du modèle IA. Structure claire avec dossiers app, api, core, models, etc.
+Création de l’endpoint /predict pour recevoir une image, faire la prédiction via le modèle chargé globalement, et renvoyer le résultat.
+Problèmes rencontrés : erreurs d’import Python corrigées en ajustant les chemins et __init__.py. Messages d’erreur TensorFlow liés au GPU ignorés car je travaille en CPU.
+Clarification du rôle des endpoints (POST pour /predict, pas accessible en GET). Ajout d’une route racine / pour éviter le 404.
+L’application démarre bien, modèle chargé, prédictions fonctionnelles via CURL. Prochaine étape : créer le front-end et écrire des tests.
