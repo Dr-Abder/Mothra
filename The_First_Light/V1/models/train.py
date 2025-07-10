@@ -10,16 +10,16 @@ from src.data_generators import train_generator, val_generator
 # 1. Construire le modèle
 model = build_model()
 
-# 2. Compiler le modèle
+# 2. Compiler le modèle /OPTI/LOSS/SURVEIL
 model.compile(
     optimizer='adam',
     loss='binary_crossentropy',
     metrics=['accuracy']
 )
 
-# 3. Entraîner le modèle
+# 3. Entraîner le modèle BD/*10/SAVE
 history = model.fit(
-    train_generator,
+    train_generator, 
     validation_data=val_generator,
     epochs=10
 )
