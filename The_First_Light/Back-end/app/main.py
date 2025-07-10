@@ -8,7 +8,6 @@ async def lifespan(app: FastAPI):
     global mothra_model_instance
     mothra_model_instance = MothraModel()  # initialisation au démarrage
     yield
-    # ici tu peux ajouter un code pour la fermeture propre, si besoin
 
 app = FastAPI(
     title="Mothra Skin Cancer Detection API",
