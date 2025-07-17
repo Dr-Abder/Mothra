@@ -5,99 +5,141 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mothra - Détection Grain de Beauté</title>
   <style>
-    body {
-      background-color: #1a1a1a;
-      color: white;
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
       font-family: Arial, sans-serif;
+      background-color: #ffffff;
+    }
+
+    .wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
+      padding: 60px 20px;
     }
-    header {
+
+    .header-logo {
+      max-width: 350px;
+      margin-bottom: 40px;
+    }
+
+    .small-logo {
+      display: none;
+    }
+
+    input[type="file"] {
+      font-size: 1.2em;
       margin-bottom: 30px;
     }
-    header img {
-      height: 50px;
-    }
-    .container {
-      background-color: #111;
-      padding: 30px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 0 20px #222;
-    }
-    h1 {
-      margin-bottom: 25px;
-      font-size: 2em;
-    }
-    input[type="file"] {
-      display: block;
-      margin: 0 auto 20px auto;
-    }
-    img.preview {
-      max-width: 100%;
-      border-radius: 15px;
-      margin-bottom: 20px;
-      box-shadow: 0 0 10px #333;
-    }
+
     button {
-      background-color: #2563eb;
-      border: none;
+      background-color: #000000;
       color: white;
-      padding: 12px 25px;
+      border: none;
+      padding: 20px 50px;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 1em;
-      margin: 5px;
-      transition: background-color 0.3s;
+      font-size: 1.4em;
+      margin: 15px;
     }
-    button:hover {
-      background-color: #1e40af;
-    }
-    .result {
-      margin-top: 20px;
-      font-size: 1.2em;
-      font-weight: bold;
-    }
+
     .loading {
       margin-top: 20px;
       font-style: italic;
+      font-size: 1.5em;
+    }
+
+    .result-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 80px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+
+    .result-image {
+      max-width: 300px;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    .result-text {
+      max-width: 700px;
+      font-size: 1.5em;
+      line-height: 1.8em;
+      text-align: center;
+    }
+
+    .buttons-container {
+      margin-top: 50px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .result-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .result-text {
+        font-size: 1.2em;
+        text-align: center;
+      }
+
+      .result-image {
+        max-width: 200px;
+      }
+
+      button {
+        font-size: 1.2em;
+        padding: 15px 30px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="logo_mothra.png" alt="Logo Mothra" />
-  </header>
+  <div class="wrapper">
+    <img src="Logo-Mothra-V1.png" alt="Logo Mothra" class="header-logo" id="mainLogo" />
 
-  <div class="container">
-    <h1>Mothra 🦋</h1>
-
+    <!-- Champ fichier : seulement sur page 1 -->
     <input type="file" id="fileInput" accept="image/*" />
-
-    <img id="preview" class="preview" src="" alt="Prévisualisation" style="display:none;" />
-
-    <button id="analyzeBtn" disabled>Analyser l'image</button>
 
     <div id="loading" class="loading" style="display:none;">Analyse en cours...</div>
 
-    <div id="result" class="result"></div>
+    <div id="resultSection" class="result-section" style="display:none;">
+      <img id="preview" class="result-image" src="" alt="Prévisualisation" />
+      <div id="resultText" class="result-text"></div>
+    </div>
 
-    <button id="resetBtn" style="display:none;">Nouvelle analyse</button>
+    <div class="buttons-container">
+      <button id="analyzeBtn" disabled>Analyser l'image</button>
+      <button id="resetBtn" style="display:none;">Nouvelle analyse</button>
+    </div>
   </div>
 
   <script>
     const fileInput = document.getElementById('fileInput');
     const preview = document.getElementById('preview');
     const analyzeBtn = document.getElementById('analyzeBtn');
-    const loading = document.getElementById('loading');
-    const resultDiv = document.getElementById('result');
     const resetBtn = document.getElementById('resetBtn');
+    const loading = document.getElementById('loading');
+    const resultSection = document.getElementById('resultSection');
+    const resultText = document.getElementById('resultText');
+    const mainLogo = document.getElementById('mainLogo');
 
     let selectedFile = null;
 
@@ -107,11 +149,10 @@
         selectedFile = file;
         const url = URL.createObjectURL(file);
         preview.src = url;
-        preview.style.display = 'block';
-        resultDiv.textContent = '';
-        loading.style.display = 'none';
+        resultSection.style.display = 'none';
         analyzeBtn.disabled = false;
         resetBtn.style.display = 'none';
+        loading.style.display = 'none';
       }
     });
 
@@ -120,14 +161,13 @@
 
       analyzeBtn.disabled = true;
       loading.style.display = 'block';
-      resultDiv.textContent = '';
+      resultSection.style.display = 'none';
 
       const formData = new FormData();
       formData.append('file', selectedFile);
 
       try {
         const start = Date.now();
-
         const response = await fetch('http://127.0.0.1:8000/predict/', {
           method: 'POST',
           body: formData,
@@ -142,10 +182,24 @@
 
         setTimeout(() => {
           loading.style.display = 'none';
-          resultDiv.textContent = `Résultat : ${data.result} (Score : ${data.prediction_score.toFixed(2)})`;
+          const percent = (data.prediction_score * 100).toFixed(2);
+          const status = data.result.toUpperCase();
+          let message = "";
+
+          if (status === "MALIN") {
+              message = `Diagnostic de votre pathologie : Selon Mothra, votre lésion présente un risque de ${percent}% d’être maligne. Il est fortement recommandé de consulter un professionnel de santé.`;
+            } else {
+              message = `Diagnostic de votre pathologie : Selon Mothra, votre lésion présente un risque de ${percent}% d’être maligne. Elle est probablement bénigne, mais un avis médical reste recommandé.`;
+            }
+
+          resultText.innerText = message;
+          resultSection.style.display = 'flex';
           resetBtn.style.display = 'inline-block';
           analyzeBtn.style.display = 'none';
+          fileInput.style.display = 'none';  // Cacher le champ fichier sur la page 2
+
         }, delay);
+
       } catch (err) {
         loading.style.display = 'none';
         analyzeBtn.disabled = false;
@@ -157,12 +211,13 @@
       selectedFile = null;
       fileInput.value = '';
       preview.src = '';
-      preview.style.display = 'none';
-      resultDiv.textContent = '';
+      resultText.innerText = '';
+      resultSection.style.display = 'none';
       loading.style.display = 'none';
       analyzeBtn.disabled = true;
       analyzeBtn.style.display = 'inline-block';
       resetBtn.style.display = 'none';
+      fileInput.style.display = 'block';  // Champ fichier réaffiché lors du reset (retour page 1)
     });
   </script>
 </body>
