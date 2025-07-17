@@ -2,7 +2,7 @@ import numpy as np
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 
-def test_image(img_path, model_path="models/mothra_cnn_v1.h5"):
+def test_image(img_path, model_path="/workspaces/Mothra/The_First_Light/V1/models/mothra_cnn_v1.h5"):
     # Charger le modèle sauvegardé
     model = load_model(model_path)
 
