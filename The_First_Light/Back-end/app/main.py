@@ -9,10 +9,6 @@ async def lifespan(app: FastAPI):
     global mothra_model_instance
     mothra_model_instance = MothraModel()
     yield
-<<<<<<< HEAD
-=======
-    # ici code à exécuter à la fermeture si besoin
->>>>>>> 40d2eb1 (pb push)
 
 # 1. Créer l'app FastAPI
 app = FastAPI(
