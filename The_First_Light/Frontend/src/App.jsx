@@ -89,7 +89,7 @@ function App() {
             />
           )}
 
-          {/* Boutons après analyse */}
+          <img src="/Bouton-UF.png" alt="Bouton Upload" />
           {!loading && prediction && (
             <div className="flex flex-col gap-2 mt-4">
               <button

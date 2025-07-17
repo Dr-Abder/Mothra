@@ -1,13 +1,169 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mothra - Détection Grain de Beauté</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      margin-bottom: 30px;
+    }
+    header img {
+      height: 50px;
+    }
+    .container {
+      background-color: #111;
+      padding: 30px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 20px #222;
+    }
+    h1 {
+      margin-bottom: 25px;
+      font-size: 2em;
+    }
+    input[type="file"] {
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+    img.preview {
+      max-width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px #333;
+    }
+    button {
+      background-color: #2563eb;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      margin: 5px;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #1e40af;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .loading {
+      margin-top: 20px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo_mothra.png" alt="Logo Mothra" />
+  </header>
+
+  <div class="container">
+    <h1>Mothra 🦋</h1>
+
+    <input type="file" id="fileInput" accept="image/*" />
+
+    <img id="preview" class="preview" src="" alt="Prévisualisation" style="display:none;" />
+
+    <button id="analyzeBtn" disabled>Analyser l'image</button>
+
+    <div id="loading" class="loading" style="display:none;">Analyse en cours...</div>
+
+    <div id="result" class="result"></div>
+
+    <button id="resetBtn" style="display:none;">Nouvelle analyse</button>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const loading = document.getElementById('loading');
+    const resultDiv = document.getElementById('result');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let selectedFile = null;
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        selectedFile = file;
+        const url = URL.createObjectURL(file);
+        preview.src = url;
+        preview.style.display = 'block';
+        resultDiv.textContent = '';
+        loading.style.display = 'none';
+        analyzeBtn.disabled = false;
+        resetBtn.style.display = 'none';
+      }
+    });
+
+    analyzeBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+
+      analyzeBtn.disabled = true;
+      loading.style.display = 'block';
+      resultDiv.textContent = '';
+
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+
+      try {
+        const start = Date.now();
+
+        const response = await fetch('http://127.0.0.1:8000/predict/', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const elapsed = Date.now() - start;
+        const delay = Math.max(3000 - elapsed, 0);
+
+        if (!response.ok) throw new Error('Erreur lors de la prédiction');
+
+        const data = await response.json();
+
+        setTimeout(() => {
+          loading.style.display = 'none';
+          resultDiv.textContent = `Résultat : ${data.result} (Score : ${data.prediction_score.toFixed(2)})`;
+          resetBtn.style.display = 'inline-block';
+          analyzeBtn.style.display = 'none';
+        }, delay);
+      } catch (err) {
+        loading.style.display = 'none';
+        analyzeBtn.disabled = false;
+        alert('Erreur : ' + err.message);
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      selectedFile = null;
+      fileInput.value = '';
+      preview.src = '';
+      preview.style.display = 'none';
+      resultDiv.textContent = '';
+      loading.style.display = 'none';
+      analyzeBtn.disabled = true;
+      analyzeBtn.style.display = 'inline-block';
+      resetBtn.style.display = 'none';
+    });
+  </script>
+</body>
 </html>
