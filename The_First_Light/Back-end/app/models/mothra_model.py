@@ -4,9 +4,9 @@ import numpy as np
 import os
 
 class MothraModel:
-    
+
     def __init__(self):
-        model_path = os.path.join(os.path.dirname(__file__), "model.h5")
+        model_path = os.path.join(os.path.dirname(__file__), "mothra_cnn_v1.h5")
         print("Chargement du modèle IA...")
         self.model = load_model(model_path)
         print("✅ Modèle chargé avec succès.")
