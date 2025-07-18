@@ -1,9 +1,12 @@
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
+import os
 
 class MothraModel:
-    def __init__(self, model_path="/workspaces/Mothra/The_First_Light/V1/models/mothra_cnn_v1.h5"):
+    
+    def __init__(self):
+        model_path = os.path.join(os.path.dirname(__file__), "model.h5")
         print("Chargement du modèle IA...")
         self.model = load_model(model_path)
         print("✅ Modèle chargé avec succès.")
