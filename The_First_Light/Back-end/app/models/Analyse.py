@@ -1,11 +1,9 @@
 import datetime
 import uuid
-from User import User, user
-import re
-import bcrypt
 
 class Analyse():
 
+    db = None
 
     def __init__(self, user_id, photo, diagnostic, confidence):
 
@@ -17,8 +15,25 @@ class Analyse():
         self.id = str(uuid.uuid4())
         self.created_at = datetime.datetime.now()
 
-        user = User.registry[user_id]
-        user.analyses.append(self)
+    def save(self):
+        if not Analyse.db:
+            raise ConnectionError("DBHandler non défini pour User")
+        
+        query="""
+            INSERT INTO analyses (id, user_id, photo, diagnostic, confidence, created_at)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ON CONFLICT (id) DO NOTHING;
+        """
+
+        params = (
+            self.id,
+            self.user_id,
+            self.photo,
+            self.diagnostic,
+            self.confidence,
+            self.created_at
+        )
+        Analyse.db.execute(query, params)
 
     def valide_owner(self, user_id):
         """Vérifie que l'user_id est bien un UUID valide et correspond à un utilisateur existant"""
@@ -28,11 +43,7 @@ class Analyse():
             uuid.UUID(user_id)
         except ValueError:
             raise ValueError("user_id invalide (UUID attendu)")
-        if user_id not in User.registry:
-            raise ValueError("Utilisateur inconnu")
         return user_id
-
-        
 
     def valide_photo(self, photo):
         """Vérifie que la photo est bien liée à l'analyse (format, nom, etc.)"""
@@ -42,8 +53,6 @@ class Analyse():
             raise ValueError("format non supporté")
         return photo
 
-        
-
     def valide_diagnostic(self, diagnostic):
         """Vérifie que le diagnostic est cohérent et bien formaté"""
         if not isinstance(diagnostic, str) or not diagnostic.strip():
@@ -51,7 +60,6 @@ class Analyse():
         if len(diagnostic) > 2000:
             raise ValueError("diagnostic trop long")
         return diagnostic
-        
 
     def valide_confidence(self, confidence):
         """Vérifie que le taux de confiance est un nombre valide"""

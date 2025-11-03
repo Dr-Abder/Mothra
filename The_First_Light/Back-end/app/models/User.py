@@ -6,6 +6,7 @@ import bcrypt
 class User():
 
     used_emails = set()
+    db = None
 
     def __init__(self, first_name, last_name, email, password, age, sex):
 
@@ -21,6 +22,28 @@ class User():
         self.created_at = datetime.datetime.now()
         self.updated_at = datetime.datetime.now()
         self.analyses = []
+
+    def save(self):
+        if not User.db:
+            raise ConnectionError("DBHandler non défini pour User")
+
+        query = """
+            INSERT INTO users (id, first_name, last_name, email, password_hash, age, sex, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            ON CONFLICT (id) DO NOTHING;
+        """
+        params = (
+            self.id,
+            self.first_name,
+            self.last_name,
+            self.email,
+            self.password_hash.decode(),  # bcrypt hash est en bytes
+            self.age,
+            self.sex,
+            self.created_at,
+            self.updated_at
+        )
+        User.db.execute(query, params)
 
     def valide_name(self, name):
         name = name.strip()
@@ -48,7 +71,7 @@ class User():
     def hash_password(self, password):
         bytes = password.encode()
         salt = bcrypt.gensalt()
-        self.password_hash = bcrypt.hashpw(bytes, salt)
+        return bcrypt.hashpw(bytes, salt)
 
     def verify_password(self, password):
         bytes = password.encode()
