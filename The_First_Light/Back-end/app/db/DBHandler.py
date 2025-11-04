@@ -36,6 +36,36 @@ class DBHandler():
             return self.cur.fetchall()
         self.conn.commit()
 
+    def fetch_one(self, query, params=None):
+        """Exécute une requête et retourne un seul résultat sous forme de dictionnaire"""
+        if params:
+            self.cur.execute(query, params)
+        else:
+            self.cur.execute(query)
+
+        row = self.cur.fetchone()
+        if row is None:
+            return None
+
+        # Convertir le tuple en dictionnaire
+        columns = [desc[0] for desc in self.cur.description]
+        return dict(zip(columns, row))
+
+    def fetch_all(self, query, params=None):
+        """Exécute une requête et retourne tous les résultats sous forme de liste de dictionnaires"""
+        if params:
+            self.cur.execute(query, params)
+        else:
+            self.cur.execute(query)
+
+        rows = self.cur.fetchall()
+        if not rows:
+            return []
+
+        # Convertir chaque tuple en dictionnaire
+        columns = [desc[0] for desc in self.cur.description]
+        return [dict(zip(columns, row)) for row in rows]
+
     def create_tables(self):
         sql_users = """CREATE TABLE IF NOT EXISTS users(
                         id UUID PRIMARY KEY,
@@ -51,7 +81,7 @@ class DBHandler():
                     );"""
         sql_analyses = """CREATE TABLE IF NOT EXISTS analyses(
                         id UUID PRIMARY KEY,
-                        user_id UUID REFERENCES users(id),
+                        user_id UUID REFERENCES users(id) ON DELETE CASCADE,
                         photo TEXT NOT NULL,
                         diagnostic TEXT NOT NULL,
                         confidence REAL NOT NULL,
