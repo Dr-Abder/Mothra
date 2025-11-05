@@ -83,10 +83,12 @@ class Analyse():
         return user_id
 
     def valide_photo(self, photo):
-        """Vérifie que la photo est bien liée à l'analyse (format, nom, etc.)"""
+        """Vérifie que la photo est bien liée à l'analyse (chemin relatif vers l'image)"""
         if not isinstance(photo, str) or not photo.strip():
             raise ValueError("photo invalide")
-        if not photo.lower().endswith(('.jpg', 'jpeg', 'png', 'webp')):
+        # Accepter les chemins relatifs (ex: user_id/filename.jpg) ou juste les noms de fichiers
+        filename = photo.split('/')[-1] if '/' in photo else photo
+        if not filename.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
             raise ValueError("format non supporté")
         return photo
 

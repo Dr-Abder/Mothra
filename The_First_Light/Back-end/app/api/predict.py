@@ -1,13 +1,17 @@
 """
-Route de prédiction ML - Upload d'image et diagnostic
+Route de prédiction ML - Upload d'image et diagnostic avec modèle CNN
 """
 
 from fastapi import APIRouter, File, UploadFile, HTTPException, status, Depends
 from datetime import datetime
+import os
 
 from models.User import User
-from schemas import PredictionResponse, PredictionResult
+from models.Analyse import Analyse
+from schemas import PredictionResponse, PredictionResult, AnalyseResponse
 from services.auth_utils import get_current_user
+from services.ml_service import get_ml_service
+from services.storage_service import get_storage_service
 
 router = APIRouter(tags=["Prediction"])
 
@@ -22,13 +26,13 @@ async def predict_image(
     current_user: User = Depends(get_current_user)
 ):
     """
-    Upload d'une image pour prédiction/diagnostic
+    Upload d'une image pour prédiction/diagnostic avec le modèle Mothra CNN
 
     - **file**: Image à analyser (formats: jpg, jpeg, png, webp, max 10MB)
 
-    Retourne un diagnostic avec le niveau de confiance.
+    Retourne un diagnostic avec le niveau de confiance du modèle de Deep Learning.
 
-    ⚠️ Note: Cette version est un mock. Intégrez votre modèle ML ici.
+    Le modèle analyse l'image (128x128) et détecte les anomalies cutanées.
     """
 
     # Vérifier l'extension du fichier
@@ -51,46 +55,49 @@ async def predict_image(
                 detail=f"Fichier trop volumineux. Taille max: {MAX_FILE_SIZE / 1024 / 1024}MB"
             )
 
-        # TODO: Intégrer votre modèle ML ici
-        # Pour l'instant, on retourne un résultat mock
-        prediction = mock_prediction(file.filename)
+        # Obtenir les services
+        ml_service = get_ml_service()
+        storage_service = get_storage_service()
+
+        # Sauvegarder l'image sur le serveur
+        image_path = storage_service.save_image(
+            user_id=current_user.id,
+            filename=file.filename,
+            file_content=contents
+        )
+
+        # Faire la prédiction avec le vrai modèle
+        prediction_result = ml_service.get_detailed_prediction(contents)
+
+        # Sauvegarder automatiquement l'analyse dans la base de données
+        analyse = Analyse(
+            user_id=current_user.id,
+            photo=image_path,  # Chemin relatif de l'image
+            diagnostic=prediction_result["diagnostic"],
+            confidence=prediction_result["confidence"]
+        )
+        analyse.save()
+
+        # Créer l'objet PredictionResult
+        prediction = PredictionResult(
+            diagnostic=prediction_result["diagnostic"],
+            confidence=prediction_result["confidence"],
+            model_version=prediction_result["model_version"],
+            timestamp=datetime.now().isoformat()
+        )
 
         return PredictionResponse(
             success=True,
             prediction=prediction,
-            message="Prédiction effectuée avec succès (mock)"
+            message=f"Prédiction réussie - Classe: {prediction_result['class_name']} - {prediction_result['recommendation']}"
         )
 
     except HTTPException:
         raise
     except Exception as e:
+        # Log l'erreur (en production, utiliser un vrai logger)
+        print(f"❌ Erreur prédiction: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Erreur lors de l'analyse: {str(e)}"
+            detail=f"Erreur lors de l'analyse de l'image: {str(e)}"
         )
-
-
-def mock_prediction(filename: str) -> PredictionResult:
-    """
-    Fonction mock pour la prédiction
-    TODO: Remplacer par votre vrai modèle ML
-    """
-    import random
-
-    diagnostics = [
-        "Mélanome détecté - Consultation urgente recommandée",
-        "Carcinome basocellulaire suspect - Consultez un dermatologue",
-        "Kératose actinique détectée - Surveillance recommandée",
-        "Naevus bénin - Pas d'inquiétude",
-        "Peau normale - Aucune anomalie détectée"
-    ]
-
-    diagnostic = random.choice(diagnostics)
-    confidence = random.uniform(0.75, 0.99)
-
-    return PredictionResult(
-        diagnostic=diagnostic,
-        confidence=round(confidence, 2),
-        model_version="mothra-v1.0",
-        timestamp=datetime.now().isoformat()
-    )

@@ -9,6 +9,7 @@ from models.User import User
 from models.Analyse import Analyse
 from schemas import UserResponse, UserUpdate, UserDataExport, SuccessResponse
 from services.auth_utils import get_current_user
+from services.storage_service import get_storage_service
 
 router = APIRouter(tags=["Users"])
 
@@ -96,12 +97,19 @@ async def delete_my_account(current_user: User = Depends(get_current_user)):
 
     Supprime définitivement le compte utilisateur et toutes les analyses associées
     grâce au CASCADE DELETE configuré dans la base de données.
+    Supprime également toutes les images stockées sur le serveur.
 
     ⚠️ Cette action est irréversible !
     """
 
     try:
         user_id = current_user.id
+
+        # Supprimer toutes les images de l'utilisateur
+        storage_service = get_storage_service()
+        storage_service.delete_user_images(user_id)
+
+        # Supprimer l'utilisateur (les analyses seront supprimées par CASCADE)
         current_user.delete()
 
         return SuccessResponse(
@@ -156,15 +164,20 @@ async def delete_all_my_analyses(current_user: User = Depends(get_current_user))
 
     Supprime toutes les analyses liées au compte utilisateur
     tout en conservant le compte actif.
+    Supprime également toutes les images associées.
     """
 
     try:
         # Récupérer toutes les analyses
         analyses = Analyse.get_by_user(current_user.id)
+        storage_service = get_storage_service()
 
-        # Supprimer chaque analyse
+        # Supprimer chaque analyse et son image
         count = 0
         for analyse in analyses:
+            # Supprimer l'image
+            storage_service.delete_image(analyse.photo)
+            # Supprimer l'analyse
             analyse.delete()
             count += 1
 

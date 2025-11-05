@@ -14,7 +14,7 @@ from models.User import User
 from models.Analyse import Analyse
 
 # Import des routers
-from api import auth, users, analyses, predict
+from api import auth, users, analyses, predict, images
 
 # Gestionnaire de base de données global
 db = None
@@ -111,6 +111,7 @@ app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/api/v1/users", tags=["Users"])
 app.include_router(analyses.router, prefix="/api/v1/analyses", tags=["Analyses"])
 app.include_router(predict.router, prefix="/api/v1/predict", tags=["Prediction"])
+app.include_router(images.router, prefix="/api/v1/images", tags=["Images"])
 
 
 @app.get("/")
