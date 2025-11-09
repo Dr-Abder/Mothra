@@ -1,37 +1,82 @@
+import { useState, useEffect } from 'react';
+import { analyses as analysesAPI, images as imagesAPI } from '../services/api';
+import { Link } from 'react-router-dom';
+
 const Dashboard = () => {
-  // Mock data pour les diagnostics
-  const diagnostics = [
-    {
-      id: 1,
-      number: "001",
-      date: "21/10/25",
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop",
-      result: "L'image analysée est probablement bénigne",
-      confidence: 92,
-      recommendation:
-        "Aucune action immédiate requise. Surveillance recommandée. Consultez un dermatologue en cas de changement.",
-    },
-    {
-      id: 2,
-      number: "002",
-      date: "18/10/25",
-      image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400&h=300&fit=crop",
-      result: "Peau normale détectée",
-      confidence: 96,
-      recommendation:
-        "Résultat normal. Continuez votre routine de soins habituels et protégez votre peau du soleil.",
-    },
-    {
-      id: 3,
-      number: "003",
-      date: "15/10/25",
-      image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop",
-      result: "Zone suspecte détectée",
-      confidence: 78,
-      recommendation:
-        "Consultation dermatologique recommandée dans les 2 semaines. Surveillez tout changement de couleur ou de taille.",
-    },
-  ];
+  const [analyses, setAnalyses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    loadAnalyses();
+  }, []);
+
+  const loadAnalyses = async () => {
+    try {
+      setLoading(true);
+      const data = await analysesAPI.getAll();
+      setAnalyses(data);
+      setError('');
+    } catch (err) {
+      console.error('Erreur lors du chargement des analyses:', err);
+      setError('Impossible de charger vos analyses');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Êtes-vous sûr de vouloir supprimer cette analyse?')) {
+      return;
+    }
+
+    try {
+      await analysesAPI.delete(id);
+      // Recharger la liste
+      loadAnalyses();
+    } catch (err) {
+      console.error('Erreur lors de la suppression:', err);
+      alert('Erreur lors de la suppression de l\'analyse');
+    }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('fr-FR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit',
+    });
+  };
+
+  const getImageUrl = (analyseId) => {
+    return imagesAPI.getAnalysisImage(analyseId);
+  };
+
+  const calculateStats = () => {
+    if (analyses.length === 0) return { avgConfidence: 0, lastDate: 'N/A' };
+
+    const avgConfidence = Math.round(
+      analyses.reduce((acc, a) => acc + (a.confidence * 100), 0) / analyses.length
+    );
+
+    const lastDate = formatDate(analyses[0].created_at);
+
+    return { avgConfidence, lastDate };
+  };
+
+  const stats = calculateStats();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-black mb-4"></div>
+          <p className="text-lg">Chargement de vos analyses...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
@@ -46,80 +91,15 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Diagnostics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {diagnostics.map((diagnostic) => (
-            <div
-              key={diagnostic.id}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-            >
-              {/* Image */}
-              <div className="aspect-[4/3] bg-gray-200">
-                <img
-                  src={diagnostic.image}
-                  alt={`Diagnostic ${diagnostic.number}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-8">
+            {error}
+          </div>
+        )}
 
-              {/* Content */}
-              <div className="p-6 space-y-4">
-                {/* Header */}
-                <div>
-                  <h3 className="text-lg font-semibold">
-                    Diagnostic n°{diagnostic.number}
-                  </h3>
-                  <p className="text-sm text-gray-600">{diagnostic.date}</p>
-                </div>
-
-                {/* Result */}
-                <div className="space-y-2">
-                  <p className="text-gray-700">
-                    {diagnostic.result}{" "}
-                    <span className="font-semibold">
-                      (confiance : {diagnostic.confidence} %)
-                    </span>
-                  </p>
-
-                  {/* Confidence Bar */}
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
-                      className={`h-2 rounded-full ${
-                        diagnostic.confidence >= 90
-                          ? "bg-green-500"
-                          : diagnostic.confidence >= 70
-                          ? "bg-yellow-500"
-                          : "bg-orange-500"
-                      }`}
-                      style={{ width: `${diagnostic.confidence}%` }}
-                    ></div>
-                  </div>
-                </div>
-
-                {/* Recommendation */}
-                <div className="pt-2 border-t border-gray-200">
-                  <p className="text-sm font-semibold mb-1">Recommandation :</p>
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    {diagnostic.recommendation}
-                  </p>
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-2 pt-2">
-                  <button className="flex-1 px-4 py-2 bg-black text-white rounded-lg text-sm hover:bg-gray-800 transition-colors">
-                    Voir détails
-                  </button>
-                  <button className="px-4 py-2 bg-gray-light rounded-lg text-sm hover:bg-gray-300 transition-colors">
-                    Exporter
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Empty State (si pas de diagnostics) */}
-        {diagnostics.length === 0 && (
+        {/* Empty State */}
+        {analyses.length === 0 ? (
           <div className="text-center py-20">
             <div className="mb-6">
               <svg
@@ -142,38 +122,103 @@ const Dashboard = () => {
             <p className="text-gray-600 mb-6">
               Effectuez votre premier diagnostic pour commencer
             </p>
-            <a
-              href="/diagnostic"
+            <Link
+              to="/diagnostic"
               className="inline-block px-8 py-4 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors"
             >
               Effectuez un diagnostic
-            </a>
+            </Link>
           </div>
-        )}
+        ) : (
+          <>
+            {/* Diagnostics Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+              {analyses.map((analyse, index) => (
+                <div
+                  key={analyse.id}
+                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  {/* Image */}
+                  <div className="aspect-[4/3] bg-gray-200 relative">
+                    <img
+                      src={getImageUrl(analyse.id)}
+                      alt={`Diagnostic ${index + 1}`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.src = 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&h=300&fit=crop';
+                      }}
+                    />
+                  </div>
 
-        {/* Stats Section */}
-        <section className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="text-4xl font-bold mb-2">{diagnostics.length}</h3>
-            <p className="text-gray-700">Analyses effectuées</p>
-          </div>
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="text-4xl font-bold mb-2">
-              {Math.round(
-                diagnostics.reduce((acc, d) => acc + d.confidence, 0) /
-                  diagnostics.length
-              )}
-              %
-            </h3>
-            <p className="text-gray-700">Confiance moyenne</p>
-          </div>
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="text-4xl font-bold mb-2">
-              {diagnostics[0]?.date || "N/A"}
-            </h3>
-            <p className="text-gray-700">Dernière analyse</p>
-          </div>
-        </section>
+                  {/* Content */}
+                  <div className="p-6 space-y-4">
+                    {/* Header */}
+                    <div>
+                      <h3 className="text-lg font-semibold">
+                        Diagnostic n°{String(index + 1).padStart(3, '0')}
+                      </h3>
+                      <p className="text-sm text-gray-600">
+                        {formatDate(analyse.created_at)}
+                      </p>
+                    </div>
+
+                    {/* Result */}
+                    <div className="space-y-2">
+                      <p className="text-gray-700">
+                        {analyse.diagnostic}
+                      </p>
+                      <p className="font-semibold">
+                        Confiance : {(analyse.confidence * 100).toFixed(1)}%
+                      </p>
+
+                      {/* Confidence Bar */}
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div
+                          className={`h-2 rounded-full ${
+                            analyse.confidence >= 0.9
+                              ? 'bg-green-500'
+                              : analyse.confidence >= 0.7
+                              ? 'bg-yellow-500'
+                              : 'bg-orange-500'
+                          }`}
+                          style={{ width: `${analyse.confidence * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex gap-2 pt-2">
+                      <button
+                        onClick={() => handleDelete(analyse.id)}
+                        className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg text-sm hover:bg-red-600 transition-colors"
+                      >
+                        Supprimer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Stats Section */}
+            <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-white rounded-2xl p-8 shadow-lg">
+                <h3 className="text-4xl font-bold mb-2">{analyses.length}</h3>
+                <p className="text-gray-700">Analyses effectuées</p>
+              </div>
+              <div className="bg-white rounded-2xl p-8 shadow-lg">
+                <h3 className="text-4xl font-bold mb-2">
+                  {stats.avgConfidence}%
+                </h3>
+                <p className="text-gray-700">Confiance moyenne</p>
+              </div>
+              <div className="bg-white rounded-2xl p-8 shadow-lg">
+                <h3 className="text-4xl font-bold mb-2">{stats.lastDate}</h3>
+                <p className="text-gray-700">Dernière analyse</p>
+              </div>
+            </section>
+          </>
+        )}
       </div>
     </div>
   );

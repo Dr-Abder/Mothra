@@ -1,8 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated, logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
 
   return (
     <nav className="bg-beige border-b border-gray-200">
@@ -24,24 +32,49 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/account"
-              className="text-black hover:text-gray-600 transition-colors"
-            >
-              Compte
-            </Link>
-            <Link
-              to="/dashboard"
-              className="text-black hover:text-gray-600 transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/diagnostic"
-              className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
-            >
-              Mothra
-            </Link>
+            {isAuthenticated() ? (
+              <>
+                <Link
+                  to="/account"
+                  className="text-black hover:text-gray-600 transition-colors"
+                >
+                  Compte
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className="text-black hover:text-gray-600 transition-colors"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/diagnostic"
+                  className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Diagnostic
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-black hover:text-gray-600 transition-colors"
+                >
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-black hover:text-gray-600 transition-colors"
+                >
+                  Connexion
+                </Link>
+                <Link
+                  to="/signup"
+                  className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  Inscription
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -77,27 +110,57 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden pb-4 space-y-3">
-            <Link
-              to="/account"
-              className="block px-4 py-2 hover:bg-gray-200 rounded-lg"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Compte
-            </Link>
-            <Link
-              to="/dashboard"
-              className="block px-4 py-2 hover:bg-gray-200 rounded-lg"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Dashboard
-            </Link>
-            <Link
-              to="/diagnostic"
-              className="block px-4 py-2 bg-black text-white rounded-lg text-center"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Mothra
-            </Link>
+            {isAuthenticated() ? (
+              <>
+                <Link
+                  to="/account"
+                  className="block px-4 py-2 hover:bg-gray-200 rounded-lg"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Compte
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className="block px-4 py-2 hover:bg-gray-200 rounded-lg"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/diagnostic"
+                  className="block px-4 py-2 bg-black text-white rounded-lg text-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Diagnostic
+                </Link>
+                <button
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-200 rounded-lg"
+                >
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="block px-4 py-2 hover:bg-gray-200 rounded-lg"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Connexion
+                </Link>
+                <Link
+                  to="/signup"
+                  className="block px-4 py-2 bg-black text-white rounded-lg text-center"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Inscription
+                </Link>
+              </>
+            )}
           </div>
         )}
       </div>

@@ -1,21 +1,43 @@
 import { useState } from 'react';
+import { predict } from '../services/api';
 
 const Diagnostic = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState('');
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+      processFile(file);
     }
+  };
+
+  const processFile = (file) => {
+    // Vérifier le type de fichier
+    if (!file.type.startsWith('image/')) {
+      setError('Veuillez sélectionner une image valide');
+      return;
+    }
+
+    // Vérifier la taille (10MB max)
+    if (file.size > 10 * 1024 * 1024) {
+      setError('L\'image est trop volumineuse (max 10MB)');
+      return;
+    }
+
+    setSelectedFile(file);
+    setError('');
+    setResult(null);
+
+    // Créer la preview
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleDragOver = (e) => {
@@ -25,32 +47,44 @@ const Diagnostic = () => {
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setSelectedFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+    if (file) {
+      processFile(file);
     }
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!selectedFile) return;
 
     setIsAnalyzing(true);
-    // Simulation d'analyse (remplacer par appel API réel)
-    setTimeout(() => {
+    setError('');
+
+    try {
+      // Appel à l'API réelle
+      const response = await predict.analyze(selectedFile);
+
       setResult({
-        diagnostic: "L'image analysée est probablement bénigne",
-        confidence: 92,
-        recommendation:
-          "Aucune action immédiate requise. Surveillance recommandée. Consultez un dermatologue en cas de changement d'aspect, de taille ou de couleur.",
-        details:
-          "Le modèle Mothra CNN v1 a analysé votre image et détecté une lésion cutanée avec des caractéristiques bénignes. La symétrie, les bords et la couleur sont dans les normes.",
+        diagnostic: response.prediction.diagnostic,
+        confidence: response.prediction.confidence * 100, // Convertir en pourcentage
+        model_version: response.prediction.model_version,
+        timestamp: response.prediction.timestamp,
+        message: response.message,
       });
+    } catch (err) {
+      console.error('Erreur lors de l\'analyse:', err);
+      setError(
+        err.response?.data?.detail ||
+        'Une erreur est survenue lors de l\'analyse. Veuillez réessayer.'
+      );
+    } finally {
       setIsAnalyzing(false);
-    }, 3000);
+    }
+  };
+
+  const handleReset = () => {
+    setSelectedFile(null);
+    setPreview(null);
+    setResult(null);
+    setError('');
   };
 
   return (
@@ -86,11 +120,7 @@ const Diagnostic = () => {
                     className="max-h-96 mx-auto rounded-lg"
                   />
                   <button
-                    onClick={() => {
-                      setPreview(null);
-                      setSelectedFile(null);
-                      setResult(null);
-                    }}
+                    onClick={handleReset}
                     className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600"
                   >
                     <svg
@@ -146,6 +176,13 @@ const Diagnostic = () => {
               />
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+                {error}
+              </div>
+            )}
+
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
               <button
@@ -160,7 +197,7 @@ const Diagnostic = () => {
                 {isAnalyzing ? (
                   <span className="flex items-center justify-center">
                     <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      className="animate-spin -ml-1 mr-3 h-5 w-5"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -248,9 +285,10 @@ const Diagnostic = () => {
               {isAnalyzing && (
                 <div className="text-center py-12">
                   <div className="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-black mb-4"></div>
-                  <p className="text-lg">Analyse en cours...</p>
+                  <p className="text-lg font-semibold">Analyse en cours...</p>
                   <p className="text-gray-600 mt-2">
-                    Notre IA analyse votre image
+                    Notre IA analyse votre image avec le modèle {' '}
+                    <span className="font-mono text-sm">Mothra CNN v1</span>
                   </p>
                 </div>
               )}
@@ -268,25 +306,32 @@ const Diagnostic = () => {
                     <div className="flex justify-between mb-2">
                       <span className="font-semibold">Niveau de confiance</span>
                       <span className="font-bold text-lg">
-                        {result.confidence}%
+                        {result.confidence.toFixed(1)}%
                       </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-4">
                       <div
-                        className="bg-green-500 h-4 rounded-full transition-all duration-1000"
+                        className={`h-4 rounded-full transition-all duration-1000 ${
+                          result.confidence >= 90
+                            ? 'bg-green-500'
+                            : result.confidence >= 70
+                            ? 'bg-yellow-500'
+                            : 'bg-orange-500'
+                        }`}
                         style={{ width: `${result.confidence}%` }}
                       ></div>
                     </div>
                   </div>
 
-                  {/* Details */}
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">
-                      Détails de l'analyse
+                  {/* Model Info */}
+                  <div className="bg-gray-50 rounded-lg p-4">
+                    <h3 className="font-semibold text-sm mb-2">
+                      Informations techniques
                     </h3>
-                    <p className="text-gray-700 leading-relaxed">
-                      {result.details}
-                    </p>
+                    <div className="text-sm text-gray-600 space-y-1">
+                      <p>Modèle: <span className="font-mono">{result.model_version}</span></p>
+                      <p>Date: {new Date(result.timestamp).toLocaleString('fr-FR')}</p>
+                    </div>
                   </div>
 
                   {/* Recommendation */}
@@ -306,17 +351,34 @@ const Diagnostic = () => {
                       Recommandation
                     </h3>
                     <p className="text-gray-700 leading-relaxed">
-                      {result.recommendation}
+                      {result.confidence >= 90
+                        ? "Les résultats sont très fiables. Consultez néanmoins un dermatologue pour confirmation si nécessaire."
+                        : result.confidence >= 70
+                        ? "Résultats satisfaisants. Une consultation dermatologique est recommandée pour un diagnostic définitif."
+                        : "Niveau de confiance modéré. Nous recommandons fortement de consulter un dermatologue pour un examen approfondi."}
+                    </p>
+                  </div>
+
+                  {/* Success Message */}
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <p className="text-green-700 text-sm">
+                      ✓ Votre analyse a été sauvegardée et est disponible dans votre dashboard
                     </p>
                   </div>
 
                   {/* Actions */}
                   <div className="flex gap-4 pt-4">
-                    <button className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors">
-                      Sauvegarder
+                    <button
+                      onClick={handleReset}
+                      className="flex-1 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                    >
+                      Nouvelle analyse
                     </button>
-                    <button className="flex-1 px-6 py-3 bg-gray-light rounded-lg hover:bg-gray-300 transition-colors">
-                      Exporter PDF
+                    <button
+                      onClick={() => window.location.href = '/dashboard'}
+                      className="flex-1 px-6 py-3 bg-gray-light rounded-lg hover:bg-gray-300 transition-colors"
+                    >
+                      Voir dashboard
                     </button>
                   </div>
                 </div>
