@@ -164,6 +164,16 @@ const Account = () => {
               >
                 Voir mon dashboard
               </button>
+
+              <button
+                onClick={async () => {
+                  await logout();
+                  navigate('/login');
+                }}
+                className="w-full sm:w-auto ml-0 sm:ml-4 px-8 py-4 bg-gray-300 text-black rounded-lg font-semibold hover:bg-gray-400 transition-colors"
+              >
+                Se déconnecter
+              </button>
             </div>
           </div>
 
