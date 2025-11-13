@@ -7,3 +7,10 @@
     @apply bg-beige text-black font-sans;
   }
 }
+
+.navbar-bg {
+  background-image: url('/images/navbar-bg.jpg'); /* 🖼️ chemin vers ton image */
+  background-size: cover;        /* l'image couvre toute la navbar */
+  background-position: center;   /* centrée horizontalement et verticalement */
+  background-repeat: no-repeat;  /* pas de répétition */
+}
