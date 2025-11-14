@@ -87,7 +87,7 @@ const Signup = () => {
     const result = await signup(apiData);
 
     if (result.success) {
-      navigate('/dashboard');
+      navigate('/');
     } else {
       setError(result.error);
     }
