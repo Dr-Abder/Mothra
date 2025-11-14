@@ -70,6 +70,30 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     return user
 
 
+async def get_current_user_from_query(token: Optional[str] = None) -> User:
+    """
+    Obtenir l'utilisateur connecté depuis le token JWT passé en query parameter
+    Utilisé pour les requêtes d'images où on ne peut pas mettre le token dans le header
+    """
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token manquant",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    token_data = verify_token(token)
+
+    user = User.get_by_id(token_data.user_id)
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Utilisateur non trouvé"
+        )
+
+    return user
+
+
 def hash_password(password: str) -> str:
     """Hash un mot de passe avec bcrypt"""
     import bcrypt

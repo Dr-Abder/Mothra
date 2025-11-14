@@ -8,7 +8,7 @@ from pathlib import Path
 
 from models.User import User
 from models.Analyse import Analyse
-from services.auth_utils import get_current_user
+from services.auth_utils import get_current_user, get_current_user_from_query
 from services.storage_service import get_storage_service
 
 router = APIRouter(tags=["Images"])
@@ -17,12 +17,14 @@ router = APIRouter(tags=["Images"])
 @router.get("/analyses/{analyse_id}/image")
 async def get_analyse_image(
     analyse_id: str,
-    current_user: User = Depends(get_current_user)
+    token: str = None,
+    current_user: User = Depends(get_current_user_from_query)
 ):
     """
     Récupère l'image associée à une analyse
 
     - **analyse_id**: ID de l'analyse
+    - **token**: Token JWT d'authentification (en query parameter)
 
     L'utilisateur ne peut récupérer que les images de ses propres analyses.
     """
