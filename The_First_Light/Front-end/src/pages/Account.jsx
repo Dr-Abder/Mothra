@@ -159,13 +159,6 @@ const Account = () => {
               </button>
 
               <button
-                onClick={() => navigate('/dashboard')}
-                className="w-full sm:w-auto ml-0 sm:ml-4 px-8 py-4 bg-gray-light rounded-lg font-semibold hover:bg-gray-300 transition-colors"
-              >
-                Voir mon dashboard
-              </button>
-
-              <button
                 onClick={async () => {
                   await logout();
                   navigate('/login');
@@ -181,7 +174,7 @@ const Account = () => {
           <div className="relative">
             <div className="aspect-square rounded-2xl bg-gray-200 overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1530210124550-912dc1381cb8?w=800&h=800&fit=crop"
+                src="/images/M3.jpg"
                 alt="Profil"
                 className="w-full h-full object-cover"
               />
@@ -197,16 +190,15 @@ const Account = () => {
 
           <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
             <p>
-              Chez Mothra, nous prenons la protection de vos données personnelles
-              très au sérieux. Toutes les informations que vous nous confiez sont
-              traitées avec le plus grand soin et dans le strict respect de la
-              réglementation RGPD (Règlement Général sur la Protection des
-              Données).
+              Votre vie privée est notre priorité. Toutes les données que vous nous confiez 
+              photos, informations personnelles, résultats de diagnostic ou autres 
+              sont strictement protégées et ne sont jamais partagées avec des tiers.
+              Vous gardez un contrôle total sur vos données :
             </p>
 
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 rounded-full bg-black flex-shrink-0 mt-1"></div>
+                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Chiffrement des données :</span>{' '}
                   Toutes vos informations médicales et personnelles sont chiffrées
@@ -215,7 +207,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 rounded-full bg-black flex-shrink-0 mt-1"></div>
+                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Accès restreint :</span> Vous
                   êtes le seul à avoir accès à vos analyses. Aucun tiers ne peut
@@ -224,7 +216,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 rounded-full bg-black flex-shrink-0 mt-1"></div>
+                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Droit à l'effacement :</span>{' '}
                   Vous pouvez à tout moment demander la suppression définitive de
@@ -233,7 +225,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 rounded-full bg-black flex-shrink-0 mt-1"></div>
+                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Portabilité :</span> Vous avez
                   le droit d'exporter l'intégralité de vos données médicales dans
@@ -242,7 +234,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 rounded-full bg-black flex-shrink-0 mt-1"></div>
+                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Utilisation transparente :</span>{' '}
                   Vos images ne sont utilisées que pour générer vos diagnostics.
@@ -252,7 +244,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-6 h-6 rounded-full bg-black flex-shrink-0 mt-1"></div>
+                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Conformité RGPD :</span> Notre
                   système est entièrement conforme au RGPD et nous respectons tous
@@ -269,7 +261,7 @@ const Account = () => {
             <div className="bg-white rounded-2xl p-6 shadow-lg space-y-4">
               <button
                 onClick={handleExportData}
-                className="w-full px-6 py-4 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors text-left flex items-center justify-between"
+                className="w-full px-6 py-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors text-left flex items-center justify-between"
               >
                 <div>
                   <p className="font-semibold">Exporter mes données</p>
@@ -294,7 +286,7 @@ const Account = () => {
 
               <button
                 onClick={handleDeleteAllAnalyses}
-                className="w-full px-6 py-4 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors text-left flex items-center justify-between"
+                className="w-full px-6 py-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors text-left flex items-center justify-between"
               >
                 <div>
                   <p className="font-semibold">Supprimer toutes mes analyses</p>
@@ -319,12 +311,12 @@ const Account = () => {
 
               <button
                 onClick={handleDeleteAccount}
-                className="w-full px-6 py-4 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-colors text-left flex items-center justify-between"
+                className="w-full px-6 py-4 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition-colors text-left flex items-center justify-between"
               >
                 <div>
                   <p className="font-semibold">Supprimer mon compte définitivement</p>
                   <p className="text-sm opacity-90">
-                    ⚠️ Action irréversible - Supprime toutes vos données
+                    ! Action irréversible - Supprime toutes vos données
                   </p>
                 </div>
                 <svg

@@ -32,7 +32,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/diagnostic"
-                  className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                  className="text-black hover:text-gray-600 transition-colors"
                 >
                   Diagnostic
                 </Link>
@@ -64,24 +64,24 @@ const Navbar = () => {
           </Link>
 
           {/* Boutons empilés verticalement à droite */}
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-1">
             {isAuthenticated() ? (
               <>
                 <Link
                   to="/account"
-                  className="block px-6 py-2 text-center hover:bg-gray-200 rounded-lg transition-colors"
+                  className="block px-6 py-2 text-right hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   Compte
                 </Link>
                 <Link
                   to="/dashboard"
-                  className="block px-6 py-2 text-center hover:bg-gray-200 rounded-lg transition-colors"
+                  className="block px-6 py-2 text-right hover:bg-gray-200 rounded-lg transition-colors"
                 >
                   Dashboard
                 </Link>
                 <Link
                   to="/diagnostic"
-                  className="block px-6 py-2 bg-black text-white rounded-lg text-center hover:bg-gray-800 transition-colors"
+                  className="block px-6 py-2 text-right hover:bg-gray-800 rounded-lg transition-colors"
                 >
                   Diagnostic
                 </Link>
