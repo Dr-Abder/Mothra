@@ -2,32 +2,32 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t border-gray-200 mt-20">
+    <footer className="bg-black border-t border-gray-200 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-8">
-          <h3 className="text-2xl font-bold mb-2">Mothra</h3>
-          <p className="text-gray-600">Voir ce que l'œil ne voit pas</p>
+          <h3 className="text-white text-2xl font-bold mb-2">Mothra</h3>
+          <p className="text-white">Voir ce que l'œil ne voit pas</p>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Features */}
           <div>
-            <h4 className="font-semibold mb-4">Features</h4>
+            <h4 className="text-white font-semibold mb-4">Features</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-600 hover:text-black">
+                <a href="#" className="text-white hover:text-gray-600">
                   Core features
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-black">
+                <a href="#" className="text-white hover:text-gray-600">
                   Pro experience
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-black">
+                <a href="#" className="text-white hover:text-gray-600">
                   Integrations
                 </a>
               </li>
@@ -36,25 +36,25 @@ const Footer = () => {
 
           {/* Learn more */}
           <div>
-            <h4 className="font-semibold mb-4">Learn more</h4>
+            <h4 className="text-white font-semibold mb-4">Learn more</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/account" className="text-gray-600 hover:text-black">
+                <Link to="/account" className="text-white hover:text-gray-600">
                   Compte
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="text-gray-600 hover:text-black">
+                <Link to="/dashboard" className="text-white hover:text-gray-600">
                   Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/diagnostic" className="text-gray-600 hover:text-black">
+                <Link to="/diagnostic" className="text-white hover:text-gray-600">
                   Mothra
                 </Link>
               </li>
               <li>
-                <Link to="/diagnostic" className="text-gray-600 hover:text-black">
+                <Link to="/diagnostic" className="text-white hover:text-gray-600">
                   Effectuez un diagnostic
                 </Link>
               </li>
@@ -63,15 +63,15 @@ const Footer = () => {
 
           {/* Support */}
           <div>
-            <h4 className="font-semibold mb-4">Support</h4>
+            <h4 className="text-white font-semibold mb-4">Support</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-600 hover:text-black">
+                <a href="#" className="text-white hover:text-gray-600">
                   Contact
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 hover:text-black">
+                <a href="#" className="text-white hover:text-gray-600">
                   Legal
                 </a>
               </li>
@@ -80,13 +80,13 @@ const Footer = () => {
 
           {/* Social */}
           <div>
-            <h4 className="font-semibold mb-4">Follow us</h4>
+            <h4 className="text-white font-semibold mb-4">Follow us</h4>
             <div className="flex space-x-4">
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-black"
+                className="text-white hover:text-gray-600"
               >
                 <svg
                   className="w-6 h-6"
@@ -100,7 +100,7 @@ const Footer = () => {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-black"
+                className="text-white hover:text-gray-600"
               >
                 <svg
                   className="w-6 h-6"
@@ -115,8 +115,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom */}
-        <div className="pt-8 border-t border-gray-200 text-center text-gray-600 text-sm">
-          <p>&copy; 2025 Mothra. All rights reserved.</p>
+        <div className="pt-8 border-t border-gray-200 text-center text-white text-sm">
+          <p>&copy; 2025 Mothra.</p>
         </div>
       </div>
     </footer>

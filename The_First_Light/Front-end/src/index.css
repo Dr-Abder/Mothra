@@ -14,3 +14,11 @@
   background-position: center;   /* centrée horizontalement et verticalement */
   background-repeat: no-repeat;  /* pas de répétition */
 }
+
+@media (max-width: 768px) {
+  .navbar-bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
