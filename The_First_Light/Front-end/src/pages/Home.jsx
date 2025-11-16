@@ -35,7 +35,7 @@ const Home = () => {
           <div className="relative">
             <div className="aspect-square rounded-2xl bg-gray-200 overflow-hidden">
               <img
-                src="public/images/M2.jpg"
+                src="/images/M2.jpg"
                 alt="Médecin avec stéthoscope"
                 className="w-full h-full object-cover"
               />
@@ -96,7 +96,7 @@ const Home = () => {
           <div className="rounded-2xl overflow-hidden">
             <div className="aspect-[362/483] overflow-hidden rounded-2xl">
               <img
-                src="public/images/2.jpg"
+                src="/images/2.jpg"
                 alt="Structure moléculaire"
                 className="w-full h-full object-cover rounded-2xl"
               />
@@ -115,7 +115,7 @@ const Home = () => {
           <div className="rounded-2xl overflow-hidden">
             <div className="aspect-[362/483] overflow-hidden rounded-2xl">
               <img
-                src="public/images/3.jpg"
+                src="/images/3.jpg"
                 alt="Cellule rose"
                 className="w-full h-full object-cover rounded-2xl"
               />
@@ -134,7 +134,7 @@ const Home = () => {
           <div className="rounded-2xl overflow-hidden">
             <div className="aspect-[362/483] overflow-hidden rounded-2xl">
               <img
-                src="public/images/4.jpg"
+                src="/images/4.jpg"
                 alt="Scanner médical"
                 className="w-full h-full object-cover rounded-2xl"
               />
