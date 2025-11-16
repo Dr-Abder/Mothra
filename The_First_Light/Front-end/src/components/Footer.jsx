@@ -11,29 +11,7 @@ const Footer = () => {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* Features */}
-          <div>
-            <h4 className="text-white font-semibold mb-4">Features</h4>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-white hover:text-gray-600">
-                  Core features
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white hover:text-gray-600">
-                  Pro experience
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-white hover:text-gray-600">
-                  Integrations
-                </a>
-              </li>
-            </ul>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Learn more */}
           <div>
             <h4 className="text-white font-semibold mb-4">Learn more</h4>

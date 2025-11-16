@@ -198,7 +198,7 @@ const Account = () => {
 
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
+                <div className="w-2 h-2 rounded-full bg-gray-700 flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Chiffrement des données :</span>{' '}
                   Toutes vos informations médicales et personnelles sont chiffrées
@@ -207,7 +207,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
+                <div className="w-2 h-2 rounded-full bg-gray-700 flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Accès restreint :</span> Vous
                   êtes le seul à avoir accès à vos analyses. Aucun tiers ne peut
@@ -216,7 +216,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
+                <div className="w-2 h-2 rounded-full bg-gray-700 flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Droit à l'effacement :</span>{' '}
                   Vous pouvez à tout moment demander la suppression définitive de
@@ -225,7 +225,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
+                <div className="w-2 h-2 rounded-full bg-gray-700 flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Portabilité :</span> Vous avez
                   le droit d'exporter l'intégralité de vos données médicales dans
@@ -234,7 +234,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
+                <div className="w-2 h-2 rounded-full bg-gray-700 flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Utilisation transparente :</span>{' '}
                   Vos images ne sont utilisées que pour générer vos diagnostics.
@@ -244,7 +244,7 @@ const Account = () => {
               </div>
 
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 rounded-full bg-black flex-shrink-0 mt-3"></div>
+                <div className="w-2 h-2 rounded-full bg-gray-700 flex-shrink-0 mt-3"></div>
                 <p>
                   <span className="font-semibold">Conformité RGPD :</span> Notre
                   système est entièrement conforme au RGPD et nous respectons tous
