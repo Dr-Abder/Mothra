@@ -49,7 +49,7 @@ src/
 ├── assets/              # Images et ressources
 ├── App.jsx              # Composant principal avec routing
 ├── main.jsx             # Point d'entrée
-└── index.css            # Styles globaux Tailwind
+└── index.css            # Styles globaux Tailwind 
 ```
 
 ## 🎨 Design System
