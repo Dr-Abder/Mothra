@@ -1,13 +1,13 @@
 const Legal = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-beige py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Mentions Légales et RGPD
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-700">
             Dernière mise à jour : 17 novembre 2025
           </p>
         </div>
@@ -20,8 +20,8 @@ const Legal = () => {
           <div className="space-y-2 text-gray-700">
             <p><strong>Nom du site :</strong> Mothra</p>
             <p><strong>Description :</strong> Plateforme d&apos;analyse dermatologique par intelligence artificielle</p>
-            <p><strong>Contact RGPD :</strong> <a href="mailto:rgpd@mothra-health.com" className="text-blue-600 hover:underline">rgpd@mothra-health.com</a></p>
-            <p><strong>Support technique :</strong> <a href="mailto:support@mothra-health.com" className="text-blue-600 hover:underline">support@mothra-health.com</a></p>
+            <p><strong>Contact RGPD :</strong> <a href="mailto:rgpd@mothra-health.com" className="text-gray-900 hover:underline font-semibold">rgpd@mothra-health.com</a></p>
+            <p><strong>Support technique :</strong> <a href="mailto:support@mothra-health.com" className="text-gray-900 hover:underline font-semibold">support@mothra-health.com</a></p>
           </div>
         </section>
 
@@ -52,7 +52,7 @@ const Legal = () => {
           {/* Tableau de conformité */}
           <div className="overflow-x-auto">
             <table className="min-w-full border-collapse border border-gray-300">
-              <thead className="bg-blue-50">
+              <thead className="bg-gray-light">
                 <tr>
                   <th className="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-900">
                     Principe RGPD
@@ -66,12 +66,12 @@ const Legal = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-700">
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Consentement
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -79,12 +79,12 @@ const Legal = () => {
                     Checkbox obligatoire + validation backend
                   </td>
                 </tr>
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Droit d&apos;accès
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -92,12 +92,12 @@ const Legal = () => {
                     Consultation de vos données via votre compte
                   </td>
                 </tr>
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Droit de rectification
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -105,12 +105,12 @@ const Legal = () => {
                     Modification de vos informations personnelles
                   </td>
                 </tr>
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Droit à l&apos;effacement
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -118,12 +118,12 @@ const Legal = () => {
                     Suppression compte + analyses + cascade automatique
                   </td>
                 </tr>
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Portabilité
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -131,12 +131,12 @@ const Legal = () => {
                     Export JSON complet de toutes vos données
                   </td>
                 </tr>
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Sécurité
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -144,12 +144,12 @@ const Legal = () => {
                     Bcrypt + JWT + isolation des fichiers utilisateur
                   </td>
                 </tr>
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Transparence
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -157,12 +157,12 @@ const Legal = () => {
                     Politique de confidentialité accessible + page compte
                   </td>
                 </tr>
-                <tr className="hover:bg-gray-50">
+                <tr className="hover:bg-beige">
                   <td className="border border-gray-300 px-4 py-3 font-medium">
                     Minimisation
                   </td>
                   <td className="border border-gray-300 px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-black text-white">
                       ✅ Conforme
                     </span>
                   </td>
@@ -198,8 +198,8 @@ const Legal = () => {
                 <li>Historique des consultations</li>
               </ul>
             </div>
-            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4">
-              <p className="text-sm text-yellow-800">
+            <div className="bg-gray-light border-l-4 border-gray-700 p-4 mt-4">
+              <p className="text-sm text-gray-900">
                 <strong>Important :</strong> Les données de santé sont des données sensibles
                 bénéficiant d&apos;une protection renforcée selon l&apos;article 9 du RGPD.
               </p>
@@ -232,38 +232,38 @@ const Legal = () => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="border-l-4 border-blue-500 pl-4">
+              <div className="border-l-4 border-black pl-4">
                 <h4 className="font-semibold mb-1">Droit d&apos;accès</h4>
                 <p className="text-sm">Consultez vos données dans votre compte</p>
               </div>
-              <div className="border-l-4 border-green-500 pl-4">
+              <div className="border-l-4 border-black pl-4">
                 <h4 className="font-semibold mb-1">Droit de rectification</h4>
                 <p className="text-sm">Modifiez vos informations personnelles</p>
               </div>
-              <div className="border-l-4 border-red-500 pl-4">
+              <div className="border-l-4 border-black pl-4">
                 <h4 className="font-semibold mb-1">Droit à l&apos;effacement</h4>
                 <p className="text-sm">Supprimez votre compte et vos données</p>
               </div>
-              <div className="border-l-4 border-purple-500 pl-4">
+              <div className="border-l-4 border-black pl-4">
                 <h4 className="font-semibold mb-1">Droit à la portabilité</h4>
                 <p className="text-sm">Exportez vos données au format JSON</p>
               </div>
-              <div className="border-l-4 border-yellow-500 pl-4">
+              <div className="border-l-4 border-black pl-4">
                 <h4 className="font-semibold mb-1">Droit d&apos;opposition</h4>
                 <p className="text-sm">Refusez certains traitements</p>
               </div>
-              <div className="border-l-4 border-indigo-500 pl-4">
+              <div className="border-l-4 border-black pl-4">
                 <h4 className="font-semibold mb-1">Droit à la limitation</h4>
                 <p className="text-sm">Limitez le traitement de vos données</p>
               </div>
             </div>
 
-            <div className="bg-blue-50 p-4 rounded-lg mt-6">
-              <p className="text-sm">
+            <div className="bg-gray-light p-4 rounded-lg mt-6">
+              <p className="text-sm text-gray-900">
                 <strong>Pour exercer vos droits :</strong> Rendez-vous dans votre
-                <a href="/account" className="text-blue-600 hover:underline ml-1 mr-1">espace compte</a>
+                <a href="/account" className="text-gray-900 hover:underline ml-1 mr-1 font-semibold">espace compte</a>
                 ou contactez-nous à
-                <a href="mailto:rgpd@mothra-health.com" className="text-blue-600 hover:underline ml-1">
+                <a href="mailto:rgpd@mothra-health.com" className="text-gray-900 hover:underline ml-1 font-semibold">
                   rgpd@mothra-health.com
                 </a>
               </p>
@@ -336,8 +336,8 @@ const Legal = () => {
               <strong>Cookies analytiques :</strong> Aucun cookie de tracking ou analytique n&apos;est
               utilisé actuellement.
             </p>
-            <div className="bg-gray-50 p-4 rounded">
-              <p className="text-sm">
+            <div className="bg-gray-light p-4 rounded">
+              <p className="text-sm text-gray-900">
                 <strong>Stockage local :</strong> Votre token d&apos;authentification est stocké
                 dans le localStorage de votre navigateur pour maintenir votre session.
               </p>
@@ -355,18 +355,18 @@ const Legal = () => {
               Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire
               une réclamation auprès de la CNIL :
             </p>
-            <div className="bg-gray-50 p-4 rounded">
-              <p className="font-semibold">Commission Nationale de l&apos;Informatique et des Libertés (CNIL)</p>
-              <p>3 Place de Fontenoy - TSA 80715</p>
-              <p>75334 PARIS CEDEX 07</p>
-              <p>Tél : 01 53 73 22 22</p>
-              <p>
+            <div className="bg-gray-light p-4 rounded">
+              <p className="font-semibold text-gray-900">Commission Nationale de l&apos;Informatique et des Libertés (CNIL)</p>
+              <p className="text-gray-700">3 Place de Fontenoy - TSA 80715</p>
+              <p className="text-gray-700">75334 PARIS CEDEX 07</p>
+              <p className="text-gray-700">Tél : 01 53 73 22 22</p>
+              <p className="text-gray-700">
                 Site web :
                 <a
                   href="https://www.cnil.fr"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline ml-1"
+                  className="text-gray-900 hover:underline ml-1 font-semibold"
                 >
                   www.cnil.fr
                 </a>
@@ -376,7 +376,7 @@ const Legal = () => {
         </section>
 
         {/* Contact */}
-        <section className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-lg shadow-md p-8 text-white">
+        <section className="bg-black rounded-lg shadow-md p-8 text-white">
           <h2 className="text-2xl font-bold mb-4">
             Questions ou demandes ?
           </h2>
@@ -388,7 +388,7 @@ const Legal = () => {
               <strong>Email RGPD :</strong>
               <a
                 href="mailto:rgpd@mothra-health.com"
-                className="underline ml-2 hover:text-blue-200"
+                className="underline ml-2 hover:text-gray-300"
               >
                 rgpd@mothra-health.com
               </a>
@@ -397,13 +397,13 @@ const Legal = () => {
               <strong>Support technique :</strong>
               <a
                 href="mailto:support@mothra-health.com"
-                className="underline ml-2 hover:text-blue-200"
+                className="underline ml-2 hover:text-gray-300"
               >
                 support@mothra-health.com
               </a>
             </p>
           </div>
-          <p className="mt-4 text-sm text-blue-100">
+          <p className="mt-4 text-sm text-gray-300">
             Nous nous engageons à répondre à vos demandes dans un délai maximum de 30 jours.
           </p>
         </section>
