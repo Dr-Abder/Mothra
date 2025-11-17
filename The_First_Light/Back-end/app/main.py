@@ -102,8 +102,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",  # Dev local
-        "https://mothra-git-main-dr-abders-projects.vercel.app",  # Ton Vercel
-        "https://*.vercel.app",  # Tous les previews Vercel
+        "https://mothra-n1mv6qmut-dr-abders-projects.vercel.app",  # Vercel preview
+        "https://mothra-git-main-dr-abders-projects.vercel.app",  # Vercel production
+        "https://*.vercel.app",  # Tous les déploiements Vercel
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -215,3 +216,4 @@ async def get_rgpd_info():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+
