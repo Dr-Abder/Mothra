@@ -9,12 +9,12 @@ from contextlib import asynccontextmanager
 import sys
 import os
 
-from db.DBHandler import DBHandler
-from models.User import User
-from models.Analyse import Analyse
+from app.db.DBHandler import DBHandler
+from app.models.User import User
+from app.models.Analyse import Analyse
 
 # Import des routers
-from api import auth, users, analyses, predict, images
+from app.api import auth, users, analyses, predict, images
 
 # Gestionnaire de base de données global
 db = None
