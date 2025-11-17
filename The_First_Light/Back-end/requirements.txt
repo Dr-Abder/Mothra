@@ -1,6 +1,6 @@
 # FastAPI et serveur
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
+fastapi[standard]==0.115.0
+uvicorn[standard]==0.32.0
 python-multipart==0.0.6
 
 # Base de données
@@ -11,9 +11,7 @@ python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 bcrypt==4.1.1
 
-# Validation
-pydantic==2.5.0
-pydantic[email]==2.5.0
+# Validation (inclus avec fastapi[standard])
 email-validator==2.1.0
 
 # Utilitaires
