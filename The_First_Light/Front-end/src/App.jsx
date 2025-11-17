@@ -9,6 +9,7 @@ import Signup from './pages/Signup';
 import Account from './pages/Account';
 import Dashboard from './pages/Dashboard';
 import Diagnostic from './pages/Diagnostic';
+import Legal from './pages/Legal';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/legal" element={<Legal />} />
               <Route
                 path="/account"
                 element={

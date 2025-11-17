@@ -49,9 +49,9 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white hover:text-gray-600">
-                  Legal
-                </a>
+                <Link to="/legal" className="text-white hover:text-gray-600">
+                  Mentions légales & RGPD
+                </Link>
               </li>
             </ul>
           </div>
