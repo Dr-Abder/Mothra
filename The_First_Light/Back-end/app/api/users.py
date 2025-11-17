@@ -7,7 +7,7 @@ from datetime import datetime
 
 from app.models.User import User
 from app.models.Analyse import Analyse
-from schemas import UserResponse, UserUpdate, UserDataExport, SuccessResponse
+from app.schemas import UserResponse, UserUpdate, UserDataExport, SuccessResponse
 from app.services.auth_utils import get_current_user
 from app.services.storage_service import get_storage_service
 

@@ -7,7 +7,7 @@ from typing import List
 
 from app.models.User import User
 from app.models.Analyse import Analyse
-from schemas import AnalyseCreate, AnalyseResponse, SuccessResponse
+from app.schemas import AnalyseCreate, AnalyseResponse, SuccessResponse
 from app.services.auth_utils import get_current_user
 
 router = APIRouter(tags=["Analyses"])

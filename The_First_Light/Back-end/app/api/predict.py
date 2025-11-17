@@ -8,7 +8,7 @@ import os
 
 from app.models.User import User
 from app.models.Analyse import Analyse
-from schemas import PredictionResponse, PredictionResult, AnalyseResponse
+from app.schemas import PredictionResponse, PredictionResult, AnalyseResponse
 from app.services.auth_utils import get_current_user
 from app.services.ml_service import get_ml_service
 from app.services.storage_service import get_storage_service
