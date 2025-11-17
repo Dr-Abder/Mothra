@@ -28,11 +28,11 @@ async def lifespan(app: FastAPI):
     # Startup: Connexion à la base de données
     print("🚀 Démarrage de l'application Mothra...")
     db = DBHandler(
-        dbname="mothra_db",
-        user="postgres",
-        password="root",
-        host="localhost",
-        port="5432"
+        dbname=os.getenv("DB_NAME", "mothra_db"),
+        user=os.getenv("DB_USER", "postgres"),
+        password=os.getenv("DB_PASSWORD", "root"),
+        host=os.getenv("DB_HOST", "localhost"),
+        port=os.getenv("DB_PORT", "5432")
     )
 
     try:
@@ -100,7 +100,11 @@ app = FastAPI(
 # Configuration CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # TODO: Restreindre en production
+    allow_origins=[
+        "http://localhost:5173",  # Dev local
+        "https://mothra-git-main-dr-abders-projects.vercel.app",  # Ton Vercel
+        "https://*.vercel.app",  # Tous les previews Vercel
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
