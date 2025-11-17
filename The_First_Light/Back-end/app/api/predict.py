@@ -6,12 +6,12 @@ from fastapi import APIRouter, File, UploadFile, HTTPException, status, Depends
 from datetime import datetime
 import os
 
-from models.User import User
-from models.Analyse import Analyse
+from app.models.User import User
+from app.models.Analyse import Analyse
 from schemas import PredictionResponse, PredictionResult, AnalyseResponse
-from services.auth_utils import get_current_user
-from services.ml_service import get_ml_service
-from services.storage_service import get_storage_service
+from app.services.auth_utils import get_current_user
+from app.services.ml_service import get_ml_service
+from app.services.storage_service import get_storage_service
 
 router = APIRouter(tags=["Prediction"])
 

@@ -10,7 +10,7 @@ from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-from models.User import User
+from app.models.User import User
 from schemas import TokenData
 
 # Configuration JWT

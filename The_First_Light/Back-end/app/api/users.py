@@ -5,11 +5,11 @@ Routes utilisateur: gestion du compte + RGPD
 from fastapi import APIRouter, Depends, HTTPException, status
 from datetime import datetime
 
-from models.User import User
-from models.Analyse import Analyse
+from app.models.User import User
+from app.models.Analyse import Analyse
 from schemas import UserResponse, UserUpdate, UserDataExport, SuccessResponse
-from services.auth_utils import get_current_user
-from services.storage_service import get_storage_service
+from app.services.auth_utils import get_current_user
+from app.services.storage_service import get_storage_service
 
 router = APIRouter(tags=["Users"])
 

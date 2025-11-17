@@ -5,10 +5,10 @@ Routes pour la gestion des analyses
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
 
-from models.User import User
-from models.Analyse import Analyse
+from app.models.User import User
+from app.models.Analyse import Analyse
 from schemas import AnalyseCreate, AnalyseResponse, SuccessResponse
-from services.auth_utils import get_current_user
+from app.services.auth_utils import get_current_user
 
 router = APIRouter(tags=["Analyses"])
 

@@ -6,10 +6,10 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.responses import FileResponse
 from pathlib import Path
 
-from models.User import User
-from models.Analyse import Analyse
-from services.auth_utils import get_current_user, get_current_user_from_query
-from services.storage_service import get_storage_service
+from app.models.User import User
+from app.models.Analyse import Analyse
+from app.services.auth_utils import get_current_user, get_current_user_from_query
+from app.services.storage_service import get_storage_service
 
 router = APIRouter(tags=["Images"])
 

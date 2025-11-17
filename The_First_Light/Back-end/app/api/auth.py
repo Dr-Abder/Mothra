@@ -5,9 +5,9 @@ Routes d'authentification: signup, login, logout
 from fastapi import APIRouter, HTTPException, status
 from datetime import timedelta
 
-from models.User import User
+from app.models.User import User
 from schemas import UserSignup, UserLogin, Token, SuccessResponse
-from services.auth_utils import create_access_token, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.services.auth_utils import create_access_token, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES
 
 router = APIRouter(tags=["Authentication"])
 
