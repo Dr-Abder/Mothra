@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Learn more */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Learn more</h4>
+            <h4 className="text-white font-semibold mb-4">Nos pages</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/account" className="text-white hover:text-gray-600">
