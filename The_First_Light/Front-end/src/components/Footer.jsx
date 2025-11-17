@@ -61,7 +61,7 @@ const Footer = () => {
             <h4 className="text-white font-semibold mb-4">Follow us</h4>
             <div className="flex space-x-4">
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/abderrahmane-ghomed-413693378/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-gray-600"
@@ -75,7 +75,7 @@ const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/Dr-Abder/Mothra"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white hover:text-gray-600"
