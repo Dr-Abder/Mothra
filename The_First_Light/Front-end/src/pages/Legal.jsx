@@ -31,7 +31,6 @@ const Legal = () => {
             2. Hébergement
           </h2>
           <div className="space-y-2 text-gray-700">
-            <p><strong>Hébergeur :</strong> À définir selon votre infrastructure</p>
             <p><strong>Localisation des serveurs :</strong> Union Européenne</p>
             <p className="text-sm text-gray-600 italic">
               Les données sont hébergées sur des serveurs sécurisés conformes aux normes RGPD
@@ -315,9 +314,6 @@ const Legal = () => {
             </p>
             <p>
               <strong>Après suppression :</strong> Effacement immédiat et définitif de toutes vos données
-            </p>
-            <p>
-              <strong>Logs de sécurité :</strong> Conservés 12 mois maximum pour la sécurité du service
             </p>
           </div>
         </section>
